@@ -1,1 +1,1 @@
-# INF2_LABO1
+# INF2_LABO2
