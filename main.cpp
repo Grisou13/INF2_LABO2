@@ -36,7 +36,7 @@ std::ostream& operator<<(std::ostream& out, const vector<T>& v){
    return out;
 }
 //override pour les type de voiture car c'est un type énuméré
-template <>
+/*template <>
 std::ostream& operator<<(std::ostream& out, const vector<TypeVoiture>& v){
    out << "[";
    TypeVoiture last = v.back();
@@ -46,6 +46,11 @@ std::ostream& operator<<(std::ostream& out, const vector<TypeVoiture>& v){
    }
    out << "]";
    out << endl;
+   return out;
+}*/
+
+std::ostream& operator<<(std::ostream& out, const TypeVoiture& type){
+   out << NomType[(size_t)type];
    return out;
 }
 
