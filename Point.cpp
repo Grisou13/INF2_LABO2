@@ -1,19 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  -----------------------------------------------------------------------------------
- Laboratoire : <nn>
+ Laboratoire : 02
  Fichier     : Point.cpp
  Auteur(s)   : RICCI Thomas <thomas.ricci@heig-vd.ch>
- Date        : February 22, 2019, 10:45 AM
+ Date        : March 15, 2019
 
- But         : <à compléter>
+ But         : Implementation de la classe Point
 
- Remarque(s) : <à compléter>
+ Remarque(s) : 
 
  Compilateur : gcc (Ubuntu 5.4.0-6ubuntu1~16.04.10) 5.4.0 20160609
  -----------------------------------------------------------------------------------
@@ -29,24 +23,6 @@
 using namespace std;
 Point::Point(double x, double y): x(x), y(y) {
    
-}
-
-
-Point* Point::translate(double x, double y){
-   this->x += x;
-   this->y += y;
-   return this;
-}
-
-Point operator +(const Point& lhs, const Point& rhs){
-   lhs += rhs;
-   return lhs;
-}
-Point operator +=(const Point& lhs, const Point& rhs){
-   Point t(0,0);
-   t.x = lhs.x + rhs.x;
-   t.y = lhs.y + rhs.y;
-   return t;
 }
 
 double Point::theta() const{
@@ -83,4 +59,21 @@ ostream& operator<<(std::ostream& out, const Point& point){
    return out;
 }
 
-
+bool operator==(const Point& lhs, const Point& rhs){
+    return (lhs.x == rhs.x) and (lhs.y == rhs.y);
+}
+bool operator<(const Point& lhs, const Point& rhs){
+    return lhs.rho() < rhs.rho();
+}
+bool operator<=(const Point& lhs, const Point& rhs){
+    return !(lhs > rhs);
+}
+bool operator>(const Point& lhs, const Point& rhs){
+    return rhs < lhs;
+}
+bool operator>=(const Point& lhs, const Point& rhs){
+    return !(lhs < rhs);
+}
+bool operator!=(const Point& lhs, const Point& rhs){
+    return !(lhs == rhs);
+}

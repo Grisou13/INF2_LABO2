@@ -3,13 +3,13 @@
  Laboratoire : 02
  Fichier     : main.cpp
  Auteur(s)   : Thomas Ricci 
- Date        : 15.03.2019
+ Date        : March 15, 2019
 
- But         : Ce programme a pour but de tester la fonction générique de tri
+ But         : Ce programme à pour but de tester la fonction générique de tri
 
  Remarque(s) : -
                
- Compilateur : - GCC-g++ (Ubuntu 16.04) 5.4.0
+ Compilateur : gcc (Ubuntu 5.4.0-6ubuntu1~16.04.10) 5.4.0 20160609
  -----------------------------------------------------------------------------------
 */
 
@@ -18,81 +18,68 @@
 #include <vector>
 #include <string>
 
-#include "voiture.h"
+#include "typeVoiture.h"
 #include "Point.h"
+#include "tri_g.h"
 
 using namespace std;
 
+//affiche un vecteur quelquonc sur la sortie standard
 template <typename T>
 std::ostream& operator<<(std::ostream& out, const vector<T>& v){
    out << "[";
-   T last = v.back();
-   for(T a : v){
-      
-      out << (a) << (a != last ? ", " : "" );
+   for(size_t i = 0; i < v.size(); ++i){
+      out << v[i] << (i != (v.size()-1) ? ", " : "" );
    }
    out << "]";
    out << endl;
    return out;
 }
-//override pour les type de voiture car c'est un type énuméré
-/*template <>
-std::ostream& operator<<(std::ostream& out, const vector<TypeVoiture>& v){
-   out << "[";
-   TypeVoiture last = v.back();
-   for(TypeVoiture a : v){
-      
-      out << NomType[(size_t)a] << (a != last ? ", " : "" );
-   }
-   out << "]";
-   out << endl;
-   return out;
-}*/
 
-std::ostream& operator<<(std::ostream& out, const TypeVoiture& type){
-   out << NomType[(size_t)type];
-   return out;
-}
-
-bool operator>(const Point& lhs, const Point& rhs){
-   return lhs.rho() > rhs.rho();
-}
-bool operator!=(const Point& lhs, const Point& rhs){
-   return lhs.rho() != rhs.rho();
-}
-
-template <typename T> 
-void tri(vector<T>& v){
-   //bubble sort
-   size_t i, j;
-   for (i = 0; i < v.size() - 1; i++)    
-      for (j = 0; j < v.size()-i-1; j++) 
-         if (v[j] > v[j+1])
-            swap(v[j], v[j+1]);
+//affiche un vecteur avec un certain format
+template <typename T>
+void afficherVecteur(vector<T>& v, const string& msg){
+   cout << "==========================" << endl;
+   cout << msg << endl;
+   cout << v;
+   tri(v);
+   cout << "Après tri: " << endl;
+   cout << v;
 }
 
 int main() {
-   vector<int> vint = {1,3,4,5,61,2,4,9,12};
-   vector<string> vstring= {"ta mere", "la pute", "de", "roumanie"};
-   vector <TypeVoiture> vtypevoit = { TypeVoiture::Fiat,  TypeVoiture::Mitsubishi, TypeVoiture::Honda };
-   vector <Point> vpoint = { Point(0,0), Point(10,5), Point(0,12), Point(1,0), Point(0,1), Point(2,1) };
-   cout << vint;
-   tri(vint);
-   cout << vint;
-   
-   cout << vtypevoit;
-   tri(vtypevoit);
-   cout << vtypevoit;
 
-   cout << vstring;
-   tri(vstring);
-   cout << vstring;
+   //trié:[1, 2, 3, 4, 4, 5, 9, 12, 61]
+   vector<int> vint = { 1, 3, 4, 5, 61, 2, 4, 9, 12 };
 
-   cout << vpoint;
-   tri(vpoint);
-   cout << vpoint;
+   //trié:[aaaa, abba, autres, bbbb]
+   vector<string> vstring = { "aaaa", "bbbb", "abba", "autres" };
+
+   //trié:[Fiat, Honda, Mitsubishi]
+   vector <TypeVoiture> vtypevoit = { TypeVoiture::Fiat,  TypeVoiture::Mitsubishi, 
+                                      TypeVoiture::Honda };
    
-   // cout << "Appuyer sur une touche pour continuer...";
-   // cin.get();
+   //trié:[Point(0,0), Point(1,0), Point(0,1), Point(2,1), Point(10,5), Point(0,12)]
+   vector <Point> vpoint = { Point(0,0), Point(10,5), Point(0,12), 
+                             Point(1,0), Point(0,1), Point(2,1) };
+
+   vector<int> vide = { };
+
+   vector<int> vtrier = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+   afficherVecteur(vide, "Vecteur vide: ");
+
+   afficherVecteur(vtrier, "Vecteur pre-trier: ");
+
+   afficherVecteur(vint, "Vecteur d'entiers: ");
+   
+   afficherVecteur(vtypevoit, "Vecteur de type de voiture: ");
+
+   afficherVecteur(vstring, "Vecteur de string: ");
+
+   afficherVecteur(vpoint, "Vecteur de point: ");
+   
+   cout << "Appuyer sur une touche pour continuer...";
+   cin.get();
    return EXIT_SUCCESS;
 }
